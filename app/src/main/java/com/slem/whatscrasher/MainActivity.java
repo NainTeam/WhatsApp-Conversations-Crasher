@@ -1,6 +1,7 @@
-package com.slem.whastappcrasher.whatsappcrasher;
+package com.slem.whatscrasher;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -8,11 +9,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.slem.whatscrasher.R;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -62,8 +67,9 @@ public class MainActivity extends ActionBarActivity {
             headerString+=" ";
         }
 
+        String crasher = text.getText().toString();
         String message = headerString+"\n\r" +
-                ""+text.getText().toString();
+                ""+crasher;
 
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("label", message);
@@ -80,9 +86,26 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+    public void showInfo(){
+        View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
+
+        // When linking text, force to always use default color. This works
+        // around a pressed color state bug.
+        TextView textView = (TextView) messageView.findViewById(R.id.about_credits);
+        TextView textView2 = (TextView) messageView.findViewById(R.id.about_descript);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.drawable.ic_launcher);
+        builder.setTitle(R.string.app_name);
+        builder.setView(messageView);
+        builder.create();
+        builder.show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+          case R.id.action_about:
+            showInfo();
             default:
                 break;
         }

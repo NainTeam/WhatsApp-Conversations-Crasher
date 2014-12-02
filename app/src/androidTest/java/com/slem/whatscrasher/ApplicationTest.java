@@ -1,4 +1,4 @@
-package com.slem.whastappcrasher.whatsappcrasher;
+package com.slem.whatscrasher;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
